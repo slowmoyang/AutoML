@@ -11,14 +11,18 @@ class ExpoMovingAverage(object):
     def __init__(self, decay_factor=0.9999):
         if 0 >= decay_factor or decay_factor >= 1:
             raise ValueError
+        # the degree of weighting decrease, a constant smoothing factor between
+        # 0 and 1. A higher \alpha discounts older observations faster
         self._a = decay_factor
-        self._t = 0
+        # time eriod
+        self._time_period = 0
+        # the vale of the EMA at any time period t
         self._s = 0
 
     def __call__(self, y):
-        self._t += 1
+        self._time_period += 1
 
-        if self._t == 1:
+        if self._time_period == 1:
             self._s = y
         else:
             self._s = self._a * y + (1 - self._a) * self._s
@@ -26,7 +30,7 @@ class ExpoMovingAverage(object):
         return self._s
 
     def reset(self):
-        self._t = 0
+        self._time_period = 0
         self._s = 0
 
 
