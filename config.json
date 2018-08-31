@@ -1,0 +1,28 @@
+{
+    "operations": ["sigmoid", "tanh", "relu", "relu6", "identity"],
+    "num_nodes": 12,
+    "hidden_size": 100,
+
+
+    "search_space": {
+    }
+
+    "controller": {
+        "tanh_constant": 2.5,
+        "temperature": 5.0,
+    }
+    
+    "trainer": {
+        "controller_lr": 0.00035,
+        "search_space": {
+            "learning_rate": 20.0,
+            "lr_decay_factor": 0.96,
+            "lr_decay_start_epoch": 15,
+            "total_epochs": 150, // TODO
+            "max_grad_norm": 0.25,
+            "l2_weight": 1e-7,
+        }
+    }
+    
+
+}
