@@ -167,8 +167,8 @@ class Controller(nn.Module):
             inputs = inputs.view(1, -1)
 
         if with_log_prob:
-            log_probs = torch.cat(log_probs).squeeze()
-            return (prev_node_ids, operations), log_probs
+            log_prob = torch.cat(log_probs).squeeze().sum()
+            return (prev_node_ids, operations), log_prob
         else:
             return (prev_node_ids, operations)
 

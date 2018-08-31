@@ -6,7 +6,7 @@ import torch
 from torch import nn
 import torch.nn.functional as F
 
-# FIXME in the binary classification case, we expect 50 % of initial accuracy
+# FIXME in the binary classification case, we can expect initial accuracy of # of
 class ExpoMovingAverage(object):
     def __init__(self, decay_factor=0.9999):
         if 0 >= decay_factor or decay_factor >= 1:
@@ -38,11 +38,12 @@ class REINFORCELossWithEMA(nn.Module):
         )
         self._baseline = 0
 
-    def forward(self, reward, log_probs):
-        adv = reward - self._baseline
-        loss = -log_probs.sum() * adv
+    def forward(self, reward, log_prob):
+        advantage = reward - self._baseline
+        loss = -log_prob * advantage
         loss = loss.mean()
 
+        # update baseline
         self._baseline = self._ema(reward)
         return loss
 
